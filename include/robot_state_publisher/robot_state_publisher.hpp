@@ -164,6 +164,7 @@ protected:
   std::map<std::string, builtin_interfaces::msg::Time> last_publish_time_;
 
   /// A map of the mimic joints that should be published
+  /// 应发布的模拟关节图
   MimicMap mimic_;
 
   /// The parameter event callback that will be called when a parameter is changed
