@@ -129,6 +129,7 @@ RobotStatePublisher::RobotStatePublisher(const rclcpp::NodeOptions & options)
   tf_broadcaster_ = std::make_unique<tf2_ros::TransformBroadcaster>(this);
   static_tf_broadcaster_ = std::make_unique<tf2_ros::StaticTransformBroadcaster>(this);
 
+  // 本身就是一个 xml 格式文件, 然后将它读取出来, 保存为 string 类型
   description_pub_ = this->create_publisher<std_msgs::msg::String>(
     "robot_description",
     // Transient local is similar to latching in ROS 1.
@@ -206,6 +207,7 @@ void RobotStatePublisher::setupURDF(const std::string & urdf_xml)
   segments_fixed_.clear();
   addChildren(model, tree.getRootSegment());
 
+  // 使用 unique_ptr 然后 移动语义
   auto msg = std::make_unique<std_msgs::msg::String>();
   msg->data = urdf_xml;
 
